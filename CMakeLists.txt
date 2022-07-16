@@ -18,6 +18,16 @@ option(
     "Use standalone asio library instead of boost"
     OFF
 )
+option(
+    asio_stream_compressor_DOWNLOAD_ASIO
+    "Download stanalone asio"
+    OFF
+)
+option(
+    asio_stream_compressor_DOWNLOAD_ZSTD
+    "Download and build zstd"
+    OFF
+)
 
 # ---- Declare library ----
 
@@ -56,12 +66,11 @@ else()
         ASIO_STEREAM_COMPRESSOR_FLAVOUR_STANDALONE
     )
 endif()
-
 find_package(zstd 1.4.0 REQUIRED)
+
 target_link_libraries(asio_stream_compressor_asio_stream_compressor INTERFACE
-    $<$<NOT:$<BOOL:asio_stream_compressor_ASIO_STANDALONE>>:Boost::boost>
-#    $<$<BOOL:asio_stream_compressor_ASIO_STANDALONE>:asio::asio>
-    Boost::boost
+    $<$<NOT:$<BOOL:${asio_stream_compressor_ASIO_STANDALONE}>>:Boost::boost>
+    $<$<BOOL:${asio_stream_compressor_ASIO_STANDALONE}>:asio::asio>
     zstd::libzstd_static
 )
 
