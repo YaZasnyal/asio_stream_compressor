@@ -19,12 +19,12 @@ namespace asio_stream_compressor
 class compressor_statistics
 {
 public:
-    using stat_type = std::atomic<size_t>;
+  using stat_type = std::atomic<size_t>;
 
-    stat_type tx_bytes_total = ATOMIC_VAR_INIT(0);
-    stat_type tx_bytes_compressed = ATOMIC_VAR_INIT(0);
-    stat_type rx_bytes_total = ATOMIC_VAR_INIT(0);
-    stat_type rx_bytes_compressed = ATOMIC_VAR_INIT(0);
+  stat_type tx_bytes_total = ATOMIC_VAR_INIT(0);
+  stat_type tx_bytes_compressed = ATOMIC_VAR_INIT(0);
+  stat_type rx_bytes_total = ATOMIC_VAR_INIT(0);
+  stat_type rx_bytes_compressed = ATOMIC_VAR_INIT(0);
 };
 
-}
+}  // namespace asio_stream_compressor

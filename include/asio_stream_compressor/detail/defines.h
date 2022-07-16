@@ -1,13 +1,16 @@
 #pragma once
 
 #ifdef ASIO_STEREAM_COMPRESSOR_FLAVOUR_STANDALONE
-#include <system_error>
-#include <asio/steady_timer.hpp>
-#include <asio/streambuf.hpp>
-#include <asio/write.hpp>
+#  include <system_error>
+
+#  include <asio/steady_timer.hpp>
+#  include <asio/streambuf.hpp>
+#  include <asio/write.hpp>
 
 // namespace fwd
-namespace asio {}
+namespace asio
+{
+}
 
 namespace asio_compressor
 {
@@ -22,7 +25,7 @@ using timer = asio::steady_timer;
 
 const error_category& system_category()
 {
-    return std::system_category();
+  return std::system_category();
 }
 
 inline timer::time_point neg_infin()
@@ -35,26 +38,27 @@ inline timer::time_point pos_infin()
   return (timer::time_point::max)();
 }
 
-inline timer::time_point expiry(
-    const timer& timer)
+inline timer::time_point expiry(const timer& timer)
 {
   return timer.expiry();
 }
 
-}
+}  // namespace asio_compressor
 
 #else
 
-#include <boost/system/error_code.hpp>
-#include <boost/asio/deadline_timer.hpp>
-#include <boost/asio/streambuf.hpp>
-#include <boost/asio/write.hpp>
+#  include <boost/asio/deadline_timer.hpp>
+#  include <boost/asio/streambuf.hpp>
+#  include <boost/asio/write.hpp>
+#  include <boost/system/error_code.hpp>
 
 // namespace fwd
 namespace boost
 {
-namespace asio {}
+namespace asio
+{
 }
+}  // namespace boost
 
 namespace asio_stream_compressor
 {
@@ -69,7 +73,7 @@ using timer = boost::asio::deadline_timer;
 
 inline const error_category& system_category()
 {
-    return boost::system::system_category();
+  return boost::system::system_category();
 }
 
 namespace detail
@@ -91,7 +95,7 @@ inline boost::asio::deadline_timer::time_type expiry(
   return timer.expires_at();
 }
 
-}
-}
+}  // namespace detail
+}  // namespace asio_stream_compressor
 
 #endif
