@@ -14,8 +14,11 @@ if(FIX)
   set(flag -w)
 endif()
 
+# comma-separated list
+set(ALLOW_WORDS "endcode")
+
 execute_process(
-    COMMAND "${SPELL_COMMAND}" ${flag}
+    COMMAND "${SPELL_COMMAND}" ${flag} -L ${ALLOW_WORDS}
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     RESULT_VARIABLE result
 )
