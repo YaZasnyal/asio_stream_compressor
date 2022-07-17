@@ -1,18 +1,19 @@
 #pragma once
 
 #ifdef ASIO_STEREAM_COMPRESSOR_FLAVOUR_STANDALONE
-#  include <system_error>
 
-#  include <asio/steady_timer.hpp>
-#  include <asio/streambuf.hpp>
-#  include <asio/write.hpp>
+#include <system_error>
+
+#include <asio/steady_timer.hpp>
+#include <asio/streambuf.hpp>
+#include <asio/write.hpp>
 
 // namespace fwd
 namespace asio
 {
 }
 
-namespace asio_compressor
+namespace asio_stream_compressor
 {
 namespace asio = ::asio;
 
@@ -43,14 +44,14 @@ inline timer::time_point expiry(const timer& timer)
   return timer.expiry();
 }
 
-}  // namespace asio_compressor
+}  // namespace asio_stream_compressor
 
 #else
 
-#  include <boost/asio/deadline_timer.hpp>
-#  include <boost/asio/streambuf.hpp>
-#  include <boost/asio/write.hpp>
-#  include <boost/system/error_code.hpp>
+#include <boost/asio/deadline_timer.hpp>
+#include <boost/asio/streambuf.hpp>
+#include <boost/asio/write.hpp>
+#include <boost/system/error_code.hpp>
 
 // namespace fwd
 namespace boost

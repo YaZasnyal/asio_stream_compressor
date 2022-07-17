@@ -18,16 +18,6 @@ option(
     "Use standalone asio library instead of boost"
     OFF
 )
-option(
-    asio_stream_compressor_DOWNLOAD_ASIO
-    "Download stanalone asio"
-    OFF
-)
-option(
-    asio_stream_compressor_DOWNLOAD_ZSTD
-    "Download and build zstd"
-    OFF
-)
 
 # ---- Declare library ----
 
@@ -48,6 +38,7 @@ target_include_directories(
 target_sources(asio_stream_compressor_asio_stream_compressor PRIVATE
     include/asio_stream_compressor/detail/defines.h
     include/asio_stream_compressor/detail/zstd_error_condition.h
+    include/asio_stream_compressor/detail/compressor_statistics.h
     include/asio_stream_compressor/detail/read_operation.h
     include/asio_stream_compressor/detail/write_operation.h
     include/asio_stream_compressor/detail/compression_core.h
@@ -69,8 +60,8 @@ endif()
 find_package(zstd 1.4.0 REQUIRED)
 
 target_link_libraries(asio_stream_compressor_asio_stream_compressor INTERFACE
-    $<$<NOT:$<BOOL:${asio_stream_compressor_ASIO_STANDALONE}>>:Boost::boost>
-    $<$<BOOL:${asio_stream_compressor_ASIO_STANDALONE}>:asio::asio>
+    $<BUILD_INTERFACE:$<$<NOT:$<BOOL:${asio_stream_compressor_ASIO_STANDALONE}>>:Boost::boost>>
+    $<BUILD_INTERFACE:$<$<BOOL:${asio_stream_compressor_ASIO_STANDALONE}>:asio::asio>>
     zstd::libzstd_static
 )
 
