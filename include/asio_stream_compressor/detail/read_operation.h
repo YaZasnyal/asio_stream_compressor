@@ -179,15 +179,19 @@ public:
   initiate_async_read_some(const initiate_async_read_some&) = default;
   initiate_async_read_some(initiate_async_read_some&&) = default;
 
-  executor_type get_executor() const noexcept { return stream_.get_executor(); }
+  executor_type get_executor() const noexcept
+  {
+    return stream_.get_executor();
+  }
 
   template<class Handler, class MutableBufferSequence>
   void operator()(Handler&& handler, const MutableBufferSequence& buffers) const
   {
-    using read_op = async_read_some_operation<std::decay_t<decltype(stream_)>,
-                                              std::decay_t<decltype(core_)>,
-                                              std::decay_t<decltype(handler)>,
-                                              std::decay_t<decltype(buffers)>>;
+    using read_op =
+        async_read_some_operation<typename std::decay<decltype(stream_)>::type,
+                                  typename std::decay<decltype(core_)>::type,
+                                  typename std::decay<decltype(handler)>::type,
+                                  typename std::decay<decltype(buffers)>::type>;
     read_op(stream_, core_, buffers, handler)(error_code(), 0);
   }
 
