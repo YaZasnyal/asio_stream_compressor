@@ -51,7 +51,7 @@ public:
             state_ = state::decode_data;
             break;
           } else {
-            // wait untill another read_some operation is finished
+            // wait until another read_some operation is finished
             core_.pending_read_.async_wait(std::move(*this));
             return;
           }

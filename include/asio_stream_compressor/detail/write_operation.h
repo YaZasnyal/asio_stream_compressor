@@ -52,7 +52,7 @@ public:
             state_ = state::encode_data;
             break;
           } else {
-            // wait untill another read_some operation is finished
+            // wait until another read_some operation is finished
             core_.pending_write_.async_wait(std::move(*this));
             return;
           }
@@ -118,7 +118,7 @@ private:
       }
     }
 
-    // flush remainig
+    // flush remaining
     size_t compress_result;
     ZSTD_inBuffer in_buf {nullptr, 0, 0};
     do {
