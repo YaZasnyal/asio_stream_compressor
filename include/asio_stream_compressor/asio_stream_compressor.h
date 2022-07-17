@@ -208,15 +208,6 @@ public:
   }
 
   /**
-   * @brief zstd_cstream_reset - reset compression stream. Equivalent
-   * to ZSTD_CCtx_reset
-   */
-  void zstd_cctx_reset(ZSTD_ResetDirective reset)
-  {
-    core_.zstd_cstream_reset(reset);
-  }
-
-  /**
    * @brief zstd_cctx_set_parameter - sets encoder contex parameter
    * @param param - param listed in ZSTD_cParameter
    * @param value - value that is in range of ZSTD_cParam_getBounds()
@@ -269,7 +260,10 @@ public:
   /**
    * @brief get_allocator - get compressor's allocator
    */
-  const Allocator& get_allocator() const { return core_.get_allocator(); }
+  const Allocator& get_allocator() const noexcept
+  {
+    return core_.get_allocator();
+  }
 
   /**
    * @brief get_statistics - returns compressor's statistics
@@ -277,7 +271,7 @@ public:
    *
    * @threadsafe this method is thread safe
    */
-  compressor_statistics& get_statistics()
+  compressor_statistics& get_statistics() noexcept
   {
     return core_.get_statistics();
   }

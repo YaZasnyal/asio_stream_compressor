@@ -34,9 +34,9 @@ public:
 
   /**
    * @brief reset - resets all counters back to zero and returns all values
-   * that were stored in thet compressor_statistics class.
+   * that were stored in the compressor_statistics object.
    */
-  value_slice reset()
+  value_slice reset() noexcept
   {
     value_slice slice;
     tx_bytes_total.exchange(slice.rx_bytes_compressed, std::memory_order::memory_order_relaxed);

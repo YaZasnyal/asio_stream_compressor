@@ -53,24 +53,24 @@ public:
 
   self& operator=(self&&) = default;
 
-  error_code zstd_cctx_set_parameter(ZSTD_cParameter param, int value)
+  error_code zstd_cctx_set_parameter(ZSTD_cParameter param, int value) noexcept
   {
     size_t status = ZSTD_CCtx_setParameter(cctx_.get(), param, value);
     return make_error_code(ZSTD_getErrorCode(status));
   }
 
-  error_code zstd_dctx_set_parameter(ZSTD_dParameter param, int value)
+  error_code zstd_dctx_set_parameter(ZSTD_dParameter param, int value) noexcept
   {
     size_t status = ZSTD_DCtx_setParameter(dctx_.get(), param, value);
     return make_error_code(ZSTD_getErrorCode(status));
   }
 
-  void zstd_cctx_reset(ZSTD_ResetDirective reset)
+  void zstd_cctx_reset(ZSTD_ResetDirective reset) noexcept
   {
     ZSTD_CCtx_reset(cctx_.get(), reset);
   }
 
-  void zstd_dctx_reset(ZSTD_ResetDirective reset)
+  void zstd_dctx_reset(ZSTD_ResetDirective reset) noexcept
   {
     ZSTD_DCtx_reset(dctx_.get(), reset);
   }
@@ -86,9 +86,15 @@ public:
     stats_.reset();
   }
 
-  const Allocator& get_allocator() const { return *this; }
+  const Allocator& get_allocator() const noexcept
+  {
+    return *this;
+  }
 
-  compressor_statistics& get_statistics() { return stats_; }
+  compressor_statistics& get_statistics() noexcept
+  {
+    return stats_;
+  }
 
   error_code set_compression_level(int level)
   {
