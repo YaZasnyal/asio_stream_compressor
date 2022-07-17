@@ -36,7 +36,7 @@ public:
   }
 
   void operator()(error_code ec,
-                  std::size_t /*bytes_transferred*/ = std::size_t(0))
+                  std::size_t bytes_transferred = std::size_t(0))
   {
     do {
       switch (state_) {
@@ -83,11 +83,11 @@ public:
           }
 
           core_.pending_write_.expires_at(neg_infin());
-          core_.stats_.tx_bytes_total.fetch_add(buffers_.size(),
+          core_.stats_.tx_bytes_total.fetch_add(bytes_transferred,
                                                 std::memory_order_relaxed);
           core_.stats_.tx_bytes_compressed.fetch_add(core_.write_buf_.size(),
                                                      std::memory_order_relaxed);
-          handler_(ec_, buffers_.size());
+          handler_(ec_, bytes_transferred);
           return;
         }
       }
