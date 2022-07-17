@@ -29,6 +29,7 @@ public:
       : stream_(o.stream_)
       , core_(o.core_)
       , buffers_(o.buffers_)
+      , input_length_(o.input_length_)
       , handler_(std::move(o.handler_))
       , state_(o.state_)
       , ec_(o.ec_)
@@ -83,11 +84,12 @@ public:
           }
 
           core_.pending_write_.expires_at(neg_infin());
-          core_.stats_.tx_bytes_total.fetch_add(bytes_transferred,
+          core_.stats_.tx_bytes_total.fetch_add(input_length_,
                                                 std::memory_order_relaxed);
           core_.stats_.tx_bytes_compressed.fetch_add(core_.write_buf_.size(),
                                                      std::memory_order_relaxed);
-          handler_(ec_, bytes_transferred);
+          core_.write_buf_.consume(core_.write_buf_.size());
+          handler_(ec_, input_length_);
           return;
         }
       }
@@ -101,6 +103,7 @@ private:
   {
     for (auto& in : buffers_) {
       ZSTD_inBuffer in_buf {in.data(), in.size(), 0};
+      input_length_ += in.size();
 
       while (in_buf.pos != in_buf.size) {
         ZSTD_outBuffer out_buf = get_free_buffer();
@@ -158,6 +161,7 @@ private:
   Stream& stream_;
   Core& core_;
   ConstBufferSequence buffers_;
+  size_t input_length_ = 0;
   Handler handler_;
 
   state state_ = state::initial;
