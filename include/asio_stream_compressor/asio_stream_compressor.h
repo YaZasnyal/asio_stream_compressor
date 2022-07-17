@@ -277,7 +277,7 @@ public:
    *
    * @threadsafe this method is thread safe
    */
-  const compressor_statistics& get_statistics() const
+  compressor_statistics& get_statistics()
   {
     return core_.get_statistics();
   }
