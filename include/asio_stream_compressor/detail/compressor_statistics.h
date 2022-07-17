@@ -65,7 +65,7 @@ public:
    */
   stat_type rx_bytes_total = ATOMIC_VAR_INIT(0);
   /**
-   * @brief rx_bytes_compressed - total number of bytes recieved from the underlying
+   * @brief rx_bytes_compressed - total number of bytes received from the underlying
    * stream (usually socket).
    *
    * @note There can be more bytes ready to be delivered.

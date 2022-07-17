@@ -10,7 +10,7 @@ namespace asio_stream_compressor
 
 /**
  * @brief The Compressor class is used to transparently compress
- * and decompress data before sending or recieving it from the
+ * and decompress data before sending or receiving it from the
  * underlying stream.
  *
  * Example:
@@ -31,7 +31,7 @@ namespace asio_stream_compressor
  * t.join();
  * @endcode
  *
- * Implemets traits: AsyncReadStream, AsyncWriteStream
+ * Implements traits: AsyncReadStream, AsyncWriteStream
  */
 template<class Stream, class Allocator = std::allocator<char>>
 class compressor
@@ -208,7 +208,7 @@ public:
   }
 
   /**
-   * @brief zstd_cctx_set_parameter - sets encoder contex parameter
+   * @brief zstd_cctx_set_parameter - sets encoder context parameter
    * @param param - param listed in ZSTD_cParameter
    * @param value - value that is in range of ZSTD_cParam_getBounds()
    * @return error_code with zstd_error_category
