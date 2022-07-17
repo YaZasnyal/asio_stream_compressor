@@ -18,6 +18,11 @@ option(
     "Use standalone asio library instead of boost"
     OFF
 )
+option(
+    asio_stream_compressor_ZSTD_SHARED
+    "Use shared zstd variand instead of static"
+    OFF
+)
 
 # ---- Declare library ----
 
@@ -49,6 +54,7 @@ target_sources(asio_stream_compressor_asio_stream_compressor PRIVATE
 
 target_compile_features(asio_stream_compressor_asio_stream_compressor INTERFACE cxx_std_11)
 
+# Find asio
 if (NOT asio_stream_compressor_ASIO_STANDALONE)
     find_package(Boost 1.68.0 REQUIRED)
 else()
@@ -57,12 +63,18 @@ else()
         ASIO_STEREAM_COMPRESSOR_FLAVOUR_STANDALONE
     )
 endif()
+
+# find zstd
 find_package(zstd 1.4.0 REQUIRED)
+if (NOT TARGET zstd::libzstd_static)
+    set(asio_stream_compressor_ZSTD_SHARED ON)
+endif()
 
 target_link_libraries(asio_stream_compressor_asio_stream_compressor INTERFACE
     $<BUILD_INTERFACE:$<$<NOT:$<BOOL:${asio_stream_compressor_ASIO_STANDALONE}>>:Boost::boost>>
     $<BUILD_INTERFACE:$<$<BOOL:${asio_stream_compressor_ASIO_STANDALONE}>:asio::asio>>
-    zstd::libzstd_static
+    $<BUILD_INTERFACE:$<$<NOT:$<BOOL:${asio_stream_compressor_ZSTD_SHARED}>>:zstd::libzstd_static>>
+    $<BUILD_INTERFACE:$<$<BOOL:${asio_stream_compressor_ZSTD_SHARED}>:zstd::libzstd_shared>>
 )
 
 # ---- Install rules ----
