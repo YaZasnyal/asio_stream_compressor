@@ -83,11 +83,12 @@ public:
                     ZSTD_ResetDirective::ZSTD_reset_session_and_parameters);
     input_buf_.consume(input_buf_.size());
     write_buf_.consume(write_buf_.size());
+    stats_.reset();
   }
 
   const Allocator& get_allocator() const { return *this; }
 
-  const compressor_statistics& get_statistics() const { return stats_; }
+  compressor_statistics& get_statistics() { return stats_; }
 
   error_code set_compression_level(int level)
   {
