@@ -52,7 +52,7 @@ target_sources(asio_stream_compressor_asio_stream_compressor PRIVATE
     include/asio_stream_compressor/statistics.h
 )
 
-target_compile_features(asio_stream_compressor_asio_stream_compressor INTERFACE cxx_std_11)
+target_compile_features(asio_stream_compressor_asio_stream_compressor INTERFACE cxx_std_14)
 
 # Find asio
 if (NOT asio_stream_compressor_ASIO_STANDALONE)
