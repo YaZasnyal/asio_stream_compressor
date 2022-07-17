@@ -45,18 +45,18 @@ public:
   }
 };
 
-const error_category& zstd_error_category()
+inline const error_category& zstd_error_category()
 {
   static zstd_error_category_impl instance;
   return instance;
 }
 
-error_code make_error_code(ZSTD_ErrorCode e)
+inline error_code make_error_code(ZSTD_ErrorCode e)
 {
   return error_code(e, zstd_error_category());
 }
 
-error_condition make_error_condition(ZSTD_ErrorCode e)
+inline error_condition make_error_condition(ZSTD_ErrorCode e)
 {
   return error_condition(e, zstd_error_category());
 }
