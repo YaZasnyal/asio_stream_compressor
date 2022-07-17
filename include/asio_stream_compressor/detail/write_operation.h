@@ -36,8 +36,7 @@ public:
   {
   }
 
-  void operator()(error_code ec,
-                  std::size_t bytes_transferred = std::size_t(0))
+  void operator()(error_code ec, std::size_t bytes_transferred = std::size_t(0))
   {
     do {
       switch (state_) {
@@ -182,16 +181,19 @@ public:
   initiate_async_write_some(const initiate_async_write_some&) = default;
   initiate_async_write_some(initiate_async_write_some&&) = default;
 
-  executor_type get_executor() const noexcept { return stream_.get_executor(); }
+  executor_type get_executor() const noexcept
+  {
+    return stream_.get_executor();
+  }
 
   template<class Handler, class ConstBufferSequence>
   void operator()(Handler&& handler, const ConstBufferSequence& buffers) const
   {
-    using write_op =
-        async_write_some_operation<std::decay_t<decltype(stream_)>,
-                                   std::decay_t<decltype(core_)>,
-                                   std::decay_t<decltype(handler)>,
-                                   std::decay_t<decltype(buffers)>>;
+    using write_op = async_write_some_operation<
+        typename std::decay<decltype(stream_)>::type,
+        typename std::decay<decltype(core_)>::type,
+        typename std::decay<decltype(handler)>::type,
+        typename std::decay<decltype(buffers)>::type>;
     write_op(stream_, core_, buffers, handler)(error_code(), 0);
   }
 
