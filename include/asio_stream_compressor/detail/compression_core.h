@@ -5,7 +5,7 @@
 #include <zstd.h>
 #include <zstd_errors.h>
 
-#include "statistics.h"
+#include "compressor_statistics.h"
 #include "zstd_error_condition.h"
 
 namespace asio_stream_compressor

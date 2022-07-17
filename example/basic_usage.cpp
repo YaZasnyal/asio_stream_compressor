@@ -57,8 +57,8 @@ auto main() -> int
 
   t.join();
   auto& stat = sock.get_statistics();
-  std::cout << "stats: \n"
-            << "\ttx_bytes_total: " << stat.tx_bytes_total.load()
+  std::cout << "stats:"
+            << "\n\ttx_bytes_total: " << stat.tx_bytes_total.load()
             << "\n\ttx_bytes_compressed: " << stat.tx_bytes_compressed.load()
             << "\n\trx_bytes_total: " << stat.rx_bytes_total.load()
             << "\n\trx_bytes_compressed: " << stat.rx_bytes_compressed.load()
