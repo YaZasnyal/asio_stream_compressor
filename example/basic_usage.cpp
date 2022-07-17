@@ -44,13 +44,13 @@ auto main() -> int
     std::cout << "sent successfully: " << bytes << " bytes" << std::endl;
     sb.consume(sb.size());
 
-    // recieve data
+    // receive data
     auto bufs = sb.prepare(DATA_SIZE);
     bytes = asio_stream_compressor::asio::async_read(
                 sock, bufs, asio_stream_compressor::asio::use_future)
                 .get();
     sb.commit(bytes);
-    std::cout << "recieved successfully: " << bytes << " bytes" << std::endl;
+    std::cout << "receive successfully: " << bytes << " bytes" << std::endl;
   } catch (std::exception& e) {
     std::cerr << e.what() << "\n";
   }
