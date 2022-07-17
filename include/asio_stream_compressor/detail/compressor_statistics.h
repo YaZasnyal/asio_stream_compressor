@@ -38,11 +38,12 @@ public:
    */
   value_slice reset() noexcept
   {
+    static const auto RELAXED = std::memory_order::memory_order_relaxed;
     value_slice slice;
-    tx_bytes_total.exchange(slice.rx_bytes_compressed, std::memory_order::memory_order_relaxed);
-    tx_bytes_compressed.exchange(slice.tx_bytes_compressed, std::memory_order::memory_order_relaxed);
-    rx_bytes_total.exchange(slice.rx_bytes_total, std::memory_order::memory_order_relaxed);
-    rx_bytes_compressed.exchange(slice.rx_bytes_compressed, std::memory_order::memory_order_relaxed);
+    slice.tx_bytes_total = tx_bytes_total.exchange(0, RELAXED);
+    slice.tx_bytes_compressed = tx_bytes_compressed.exchange(0, RELAXED);
+    slice.rx_bytes_total = rx_bytes_total.exchange(0, RELAXED);
+    slice.rx_bytes_compressed = rx_bytes_compressed.exchange(0, RELAXED);
     return slice;
   }
 
@@ -65,8 +66,8 @@ public:
    */
   stat_type rx_bytes_total = ATOMIC_VAR_INIT(0);
   /**
-   * @brief rx_bytes_compressed - total number of bytes received from the underlying
-   * stream (usually socket).
+   * @brief rx_bytes_compressed - total number of bytes received from the
+   * underlying stream (usually socket).
    *
    * @note There can be more bytes ready to be delivered.
    */
