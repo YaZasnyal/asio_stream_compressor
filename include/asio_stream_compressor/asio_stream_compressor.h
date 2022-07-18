@@ -219,9 +219,9 @@ public:
    *
    * Example:
    * @endcode
-   * if (auto ec = zstd_cctx_set_parameter(ZSTD_c_compressionLevel, 1000); !ec)
+   * if (auto ec = zstd_cctx_set_parameter(ZSTD_c_compressionLevel, 1000); ec)
    * {
-   *  // process error
+   *   // process error
    * }
    * @endcode
    *

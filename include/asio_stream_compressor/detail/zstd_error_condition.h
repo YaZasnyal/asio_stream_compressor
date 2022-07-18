@@ -24,7 +24,7 @@ public:
 
   std::string message(int ev) const override
   {
-    return ZSTD_getErrorString(ZSTD_getErrorCode(ev));
+    return ZSTD_getErrorString(static_cast<ZSTD_ErrorCode>(ev));
   }
 
   error_condition default_error_condition(int ev) const noexcept override

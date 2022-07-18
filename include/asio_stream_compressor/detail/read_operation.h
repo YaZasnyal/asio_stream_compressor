@@ -118,6 +118,10 @@ private:
           ZSTD_inBuffer in_buf {nullptr, 0, 0};
           decompression_result =
               ZSTD_decompressStream(core_.dctx_.get(), &out_buf, &in_buf);
+          if (ZSTD_isError(decompression_result)) {
+            ec_ = make_error_code(ZSTD_getErrorCode(decompression_result));
+            return false;
+          }
           break;
         } else {
           auto in = core_.input_buf_.data().begin();
