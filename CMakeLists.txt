@@ -56,7 +56,7 @@ target_compile_features(asio_stream_compressor_asio_stream_compressor INTERFACE 
 
 # Find asio
 if (NOT asio_stream_compressor_ASIO_STANDALONE)
-    find_package(Boost 1.67.0 REQUIRED)
+    find_package(Boost 1.70.0 REQUIRED)
 else()
     find_package(asio REQUIRED)
     target_compile_definitions(asio_stream_compressor_asio_stream_compressor INTERFACE
