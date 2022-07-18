@@ -1,6 +1,6 @@
 # asio_stream_compressor
 
-`asio_stream_compressor` is a header-only library that allows used to add ZSTD
+`asio_stream_compressor` is a header-only library that allows to add ZSTD
 compression support for the asynchronous streams with easy to use wrapper.
 
 One minute example:
