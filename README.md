@@ -11,6 +11,7 @@ One minute example:
 
 auto main(int, char**) -> int
 {
+  namespace ip = boost::asio::ip;
   asio_stream_compressor::asio::io_context ctx;
   boost::asio::spawn(
       [&](auto yield)
