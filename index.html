@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>asio_stream_compressor</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">asio_stream_compressor</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          asio_stream_compressor
+        </h1>
+        <p><strong>As a subdirectory</strong></p>
+<p><strong>As a subdirectory</strong><code><a href="namespaceasio__stream__compressor.html" class="m-doc">asio_<wbr />stream_<wbr />compressor</a></code> is a header-only library that allows used to add ZSTD compression support for the asynchronous streams with easy to use wrapper.</p><p>One minute example:</p><pre class="m-code"><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;boost/asio/spawn.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;asio_stream_compressor/asio_stream_compressor.h&gt;</span><span class="cp"></span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">int</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">namespace</span><span class="w"> </span><span class="nn">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">boost</span><span class="o">::</span><span class="nn">asio</span><span class="o">::</span><span class="nn">ip</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">asio_stream_compressor</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="w"> </span><span class="n">ctx</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">spawn</span><span class="p">(</span><span class="w"></span>
+<span class="w">      </span><span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">auto</span><span class="w"> </span><span class="n">yield</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello world!&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">asio_stream_compressor</span><span class="o">::</span><span class="n">compressor</span><span class="o">&lt;</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span><span class="w"> </span><span class="n">sock</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">sock</span><span class="p">.</span><span class="n">next_layer</span><span class="p">().</span><span class="n">async_connect</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="p">(</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">8080</span><span class="p">),</span><span class="w"> </span><span class="n">yield</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_write</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">sock</span><span class="p">,</span><span class="w"> </span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="n">size</span><span class="p">()),</span><span class="w"> </span><span class="n">yield</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_read</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">sock</span><span class="p">,</span><span class="w"> </span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">message</span><span class="p">.</span><span class="n">size</span><span class="p">()),</span><span class="w"> </span><span class="n">yield</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">});</span><span class="w"></span>
+<span class="w">  </span><span class="n">ctx</span><span class="p">.</span><span class="n">run</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span></pre><section id="autotoc_md1"><h2><a href="#autotoc_md1">Requirements</a></h2><ul><li>C++14 compatible compiler</li><li>CMake &gt;= 3.14</li><li>Boost &gt;= 1.70.0 or ASIO (tested with 1.22.1)</li><li>zstd &gt;= 1.40.0</li></ul></section><section id="autotoc_md2"><h2><a href="#autotoc_md2">Usage</a></h2><p>The library can be added to a CMake project using either <code>add_subdirectory</code> or <code>find_package</code>. Once set up, include the individual headers from the asio_stream_compressor/ directory or the convenience header:</p><pre class="m-code"><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;asio_stream_compressor/asio_stream_compressor.h&gt;</span><span class="cp"></span></pre><p>&lt;details&gt;</p><p>Add this repository to your project as submodule or using FetchContent</p><p>Using <code>FetchContent</code>:</p><pre class="m-code"><span class="nb">include</span><span class="p">(</span><span class="s">FetchContent</span><span class="p">)</span>
+<span class="nb">FetchContent_Declare</span><span class="p">(</span><span class="s">external_compressor</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/YaZasnyal/asio_stream_compressor.git</span>
+<span class="w">    </span><span class="s">GIT_TAG</span><span class="w"> </span><span class="s">&lt;tag</span><span class="w"> </span><span class="s">or</span><span class="w"> </span><span class="s">branch&gt;</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="nb">FetchContent_Populate</span><span class="p">(</span><span class="s">external_compressor</span><span class="p">)</span>
+<span class="nb">add_subdirectory</span><span class="p">(</span><span class="o">${</span><span class="nv">external_compressor_SOURCE_DIR</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">external_compressor_BINARY_DIR</span><span class="o">}</span><span class="p">)</span></pre><p>Using <code>submodules</code>: <code class="m-code">git submodule add https://github.com/YaZasnyal/asio_stream_compressor.git &lt;path&gt;</code></p><pre class="m-code"><span class="nb">add_subdirectory</span><span class="p">(</span><span class="s">&lt;path&gt;</span><span class="p">)</span></pre><p>&lt;/details&gt;</p><p>&lt;details&gt;</p><p><strong>As a CMake package</strong></p><p>Clone the repository and install it.</p><pre class="m-code">cmake -B build -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/desired/installation/directory .
+cmake --build build --target install</pre><p>Locate it and link it to your target.</p><pre class="m-code"><span class="nb">find_package</span><span class="p">(</span><span class="s">asio_stream_compressor</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">your_app</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">asio_stream_compressor::asio_stream_compressor</span><span class="p">)</span></pre><p>&lt;/details&gt;</p></section><section id="autotoc_md3"><h2><a href="#autotoc_md3">CMake Options</a></h2><p>There are some options that allow you to change the behavior of the library. This options should be set before calling <code>add_subdirectory</code> or <code>find_package</code>.</p><ul><li><code>asio_stream_compressor_ASIO_STANDALONE</code> - tells library to use standalone asio instead of Boost.Asio</li><li><code>asio_stream_compressor_ZSTD_SHARED</code> - tells library to use shared version of zstd library in its public interface.</li></ul></section><section id="autotoc_md4"><h2><a href="#autotoc_md4">Building and installing</a></h2><p>See the BUILDING document.</p></section><section id="autotoc_md5"><h2><a href="#autotoc_md5">Contributing</a></h2><p>See the CONTRIBUTING document.</p></section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>asio_stream_compressor. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
