@@ -455,7 +455,7 @@
                 </tr>
               </tbody>
             </table>
-<aside class="m-note m-danger"><h4>Warning</h4><p>calling this method during after async_read/write_some may cause undefined behavior. Use <a href="classasio__stream__compressor_1_1compressor.html#a86ee4bf2386534e3053bdcae92060bd1" class="m-doc">reset()</a> to reset internal context and configure context again.</p></aside><p>Example:  if (auto ec = zstd_cctx_set_parameter(ZSTD_c_compressionLevel, 1000); !ec) { // process error }</p>
+<aside class="m-note m-danger"><h4>Warning</h4><p>calling this method during after async_read/write_some may cause undefined behavior. Use <a href="classasio__stream__compressor_1_1compressor.html#a86ee4bf2386534e3053bdcae92060bd1" class="m-doc">reset()</a> to reset internal context and configure context again.</p></aside><p>Example:  if (auto ec = zstd_cctx_set_parameter(ZSTD_c_compressionLevel, 1000); ec) { // process error }</p>
           </div></section>
           <section class="m-doc-details" id="a4f7da209b636526fe002911d25233aa0"><div>
             <h3>
