@@ -136,6 +136,10 @@ public:
    * On immediate completion, invocation of the handler will be performed in a
    * manner equivalent to using boost::asio::post().
    *
+   * If this method returns an error it is usually impossible to continue
+   * operation so reset() should be called to clear internal state of the
+   * compressor.
+   *
    */
   template<typename MutableBufferSequence,
            typename ReadToken =
@@ -169,6 +173,10 @@ public:
    * On immediate completion, invocation of the handler will be performed in a
    * manner equivalent to using boost::asio::post().
    *
+   * If this method returns an error it is usually impossible to continue
+   * operation so reset() should be called to clear internal state of the
+   * compressor.
+   *
    * @warning number of bytes in the callback will be equal to size of the
    * provided buffers or 0 if not all of them could be transferred. This is
    * because of difficulties of mapping provided byted to compressed bytes.
@@ -190,13 +198,19 @@ public:
   /**
    * @brief next_layer returns next layer in the stack of stream layers.
    */
-  next_layer_type& next_layer() { return next_layer_; }
+  next_layer_type& next_layer()
+  {
+    return next_layer_;
+  }
 
   /**
    * @brief lowest_layer returns the lowest layer in the stack of stream
    * layers.
    */
-  lowest_layer_type& lowest_layer() { return next_layer_.lowest_layer(); }
+  lowest_layer_type& lowest_layer()
+  {
+    return next_layer_.lowest_layer();
+  }
 
   /**
    * @brief get_executor obtains the executor object that the stream uses
@@ -247,11 +261,16 @@ public:
    * This method is used to reset compressor after failures. This will
    * reset both encoder and decoder contexts and drop any remaining data
    * as if ZSTD_ResetDirective::ZSTD_reset_session_and_parameters was used.
+   * This will also reset compression level to the one provided in the
+   * constructor or default if it wasn't.
    *
    * @warning It is unsafe to call this function if there is an active
    * asynchronous operation in progress.
    */
-  void reset() { core_.reset(); }
+  void reset()
+  {
+    core_.reset();
+  }
 
   /**
    * @brief get_allocator - get compressor's allocator
