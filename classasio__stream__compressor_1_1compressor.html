@@ -387,7 +387,7 @@
                 </tr>
               </tbody>
             </table>
-<p>Regardless of whether the asynchronous operation completes immediately or not, the completion handler will not be invoked from within this function. On immediate completion, invocation of the handler will be performed in a manner equivalent to using boost::asio::post().</p>
+<p>Regardless of whether the asynchronous operation completes immediately or not, the completion handler will not be invoked from within this function. On immediate completion, invocation of the handler will be performed in a manner equivalent to using boost::asio::post().</p><p>If this method returns an error it is usually impossible to continue operation so <a href="classasio__stream__compressor_1_1compressor.html#a86ee4bf2386534e3053bdcae92060bd1" class="m-doc">reset()</a> should be called to clear internal state of the compressor.</p>
           </div></section>
           <section class="m-doc-details" id="af567170aa26a4580f1b6246e1de8655b"><div>
             <h3>
@@ -414,7 +414,7 @@
                 </tr>
               </tbody>
             </table>
-<p>Regardless of whether the asynchronous operation completes immediately or not, the completion handler will not be invoked from within this function. On immediate completion, invocation of the handler will be performed in a manner equivalent to using boost::asio::post().</p><aside class="m-note m-danger"><h4>Warning</h4><p>number of bytes in the callback will be equal to size of the provided buffers or 0 if not all of them could be transferred. This is because of difficulties of mapping provided byted to compressed bytes.</p></aside>
+<p>Regardless of whether the asynchronous operation completes immediately or not, the completion handler will not be invoked from within this function. On immediate completion, invocation of the handler will be performed in a manner equivalent to using boost::asio::post().</p><p>If this method returns an error it is usually impossible to continue operation so <a href="classasio__stream__compressor_1_1compressor.html#a86ee4bf2386534e3053bdcae92060bd1" class="m-doc">reset()</a> should be called to clear internal state of the compressor.</p><aside class="m-note m-danger"><h4>Warning</h4><p>number of bytes in the callback will be equal to size of the provided buffers or 0 if not all of them could be transferred. This is because of difficulties of mapping provided byted to compressed bytes.</p></aside>
           </div></section>
           <section class="m-doc-details" id="a08c8da614301cf163880319e08e5dc28"><div>
             <h3>
@@ -439,23 +439,14 @@
                   <td>- value that is in range of ZSTD_cParam_getBounds()</td>
                 </tr>
               </tbody>
-              <thead>
+              <tfoot>
                 <tr>
                   <th>Returns</th>
                   <td>error_code with zstd_error_category</td>
                 </tr>
-              </thead>
-              <thead>
-                <tr><th colspan="2">Exceptions</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>this</td>
-                  <td>method does not throw exceptions.</td>
-                </tr>
-              </tbody>
+              </tfoot>
             </table>
-<aside class="m-note m-danger"><h4>Warning</h4><p>calling this method during after async_read/write_some may cause undefined behavior. Use <a href="classasio__stream__compressor_1_1compressor.html#a86ee4bf2386534e3053bdcae92060bd1" class="m-doc">reset()</a> to reset internal context and configure context again.</p></aside><p>Example:  if (auto ec = zstd_cctx_set_parameter(ZSTD_c_compressionLevel, 1000); ec) { // process error }</p>
+<aside class="m-note m-danger"><h4>Warning</h4><p>calling this method after async_read/write_some may cause undefined behavior. Use <a href="classasio__stream__compressor_1_1compressor.html#a86ee4bf2386534e3053bdcae92060bd1" class="m-doc">reset()</a> to reset internal context and configure context again.</p></aside><p>Example:  if (auto ec = zstd_cctx_set_parameter(ZSTD_c_compressionLevel, 1000); ec) { // process error }</p>
           </div></section>
           <section class="m-doc-details" id="a4f7da209b636526fe002911d25233aa0"><div>
             <h3>
@@ -480,21 +471,12 @@
                   <td>- value that is in range of ZSTD_cParam_getBounds()</td>
                 </tr>
               </tbody>
-              <thead>
+              <tfoot>
                 <tr>
                   <th>Returns</th>
                   <td>error_code with zstd_error_category</td>
                 </tr>
-              </thead>
-              <thead>
-                <tr><th colspan="2">Exceptions</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>this</td>
-                  <td>method does not throw exceptions.</td>
-                </tr>
-              </tbody>
+              </tfoot>
             </table>
           </div></section>
           <section class="m-doc-details" id="a86ee4bf2386534e3053bdcae92060bd1"><div>
@@ -505,7 +487,7 @@
               <span class="m-doc-wrap-bumper">void asio_stream_compressor::<wbr />compressor&lt;Stream, Allocator&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a86ee4bf2386534e3053bdcae92060bd1" class="m-doc-self">reset</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>reset - resets internal structures</p>
-<p>This method is used to reset compressor adter failures. This will reset both encoder and decoder contexts and drop any remaining data as if ZSTD_ResetDirective::ZSTD_reset_session_and_parameters was used</p><aside class="m-note m-danger"><h4>Warning</h4><p>It is unsafe to call this function if there is an active asynchronous operation in progress.</p></aside>
+<p>This method is used to reset compressor after failures. This will reset both encoder and decoder contexts and drop any remaining data as if ZSTD_ResetDirective::ZSTD_reset_session_and_parameters was used. This will also reset compression level to the one provided in the constructor or default if it wasn&#x27;t.</p><aside class="m-note m-danger"><h4>Warning</h4><p>It is unsafe to call this function if there is an active asynchronous operation in progress.</p></aside>
           </div></section>
           <section class="m-doc-details" id="a768d45998a8fe668a151c046d544a179"><div>
             <h3>
@@ -523,7 +505,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>@threadsafe this method is thread safe</p>
+<p>This method is thread safe</p>
           </div></section>
         </section>
       </div>
