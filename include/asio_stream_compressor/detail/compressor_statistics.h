@@ -22,7 +22,7 @@ public:
   using stat_type = std::atomic<value_type>;
 
   /**
-   * @brief The value_slice struct stores stats right before they are reset.
+   * @brief The value_slice struct is used to return values from reset() method.
    */
   struct value_slice
   {
@@ -33,8 +33,8 @@ public:
   };
 
   /**
-   * @brief reset - resets all counters back to zero and returns all values
-   * that were stored in the compressor_statistics object.
+   * @brief reset - resets all counters back to zero and returns then as a new
+   * object.
    */
   value_slice reset() noexcept
   {

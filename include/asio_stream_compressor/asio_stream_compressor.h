@@ -213,7 +213,7 @@ public:
    * @param value - value that is in range of ZSTD_cParam_getBounds()
    * @return error_code with zstd_error_category
    *
-   * @warning calling this method during after async_read/write_some may cause
+   * @warning calling this method after async_read/write_some may cause
    * undefined behavior. Use reset() to reset internal context and configure
    * context again.
    *
@@ -224,8 +224,6 @@ public:
    *   // process error
    * }
    * @endcode
-   *
-   * @throws this method does not throw exceptions.
    */
   error_code zstd_cctx_set_parameter(ZSTD_cParameter param, int value) noexcept
   {
@@ -237,8 +235,6 @@ public:
    * @param param - param listed in ZSTD_cParameter
    * @param value - value that is in range of ZSTD_cParam_getBounds()
    * @return error_code with zstd_error_category
-   *
-   * @throws this method does not throw exceptions.
    */
   error_code zstd_dctx_set_parameter(ZSTD_dParameter param, int value) noexcept
   {
@@ -248,9 +244,9 @@ public:
   /**
    * @brief reset - resets internal structures
    *
-   * This method is used to reset compressor adter failures. This will
+   * This method is used to reset compressor after failures. This will
    * reset both encoder and decoder contexts and drop any remaining data
-   * as if ZSTD_ResetDirective::ZSTD_reset_session_and_parameters was used
+   * as if ZSTD_ResetDirective::ZSTD_reset_session_and_parameters was used.
    *
    * @warning It is unsafe to call this function if there is an active
    * asynchronous operation in progress.
@@ -269,7 +265,7 @@ public:
    * @brief get_statistics - returns compressor's statistics
    * @return compressor_statistics object with read/write stats
    *
-   * @threadsafe this method is thread safe
+   * This method is thread safe
    */
   compressor_statistics& get_statistics() noexcept
   {
