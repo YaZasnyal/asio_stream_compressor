@@ -36,7 +36,7 @@ public:
   {
   }
 
-  void operator()(error_code ec, std::size_t bytes_transferred = std::size_t(0))
+  void operator()(error_code ec, std::size_t /*bytes_transferred*/ = std::size_t(0), bool start = 0)
   {
     do {
       switch (state_) {
@@ -94,6 +94,14 @@ public:
       }
     } while (!ec);
 
+    // if this function is called directly from initiate function  we
+    // should call handler_ as if it was post()'ed. So we begin a zero
+    // length async read operation.
+    if (start) {
+      auto bufs = core_.write_buf_.prepare(0);
+      stream_.next_layer().async_read_some(bufs, std::move(*this));
+      return;
+    }
     handler_(ec_, 0);
   }
 
@@ -194,7 +202,7 @@ public:
         typename std::decay<decltype(core_)>::type,
         typename std::decay<decltype(handler)>::type,
         typename std::decay<decltype(buffers)>::type>;
-    write_op(stream_, core_, buffers, handler)(error_code(), 0);
+    write_op(stream_, core_, buffers, handler)(error_code(), 0, true);
   }
 
 private:
