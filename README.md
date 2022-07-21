@@ -14,6 +14,7 @@ auto main(int, char**) -> int
   namespace ip = boost::asio::ip;
   boost::asio::io_context ctx;
   boost::asio::spawn(
+      ctx,
       [&](auto yield)
       {
         std::string message = "Hello world!";
