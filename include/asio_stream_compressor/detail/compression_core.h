@@ -104,7 +104,7 @@ public:
     return stats_;
   }
 
-  error_code set_compression_level(int level)
+  error_code set_compression_level(int level) noexcept
   {
     return zstd_cctx_set_parameter(ZSTD_c_compressionLevel, level);
   }

@@ -41,10 +41,8 @@ public:
 
   /// The type of the next layer.
   using next_layer_type = typename std::remove_reference<Stream>::type;
-  /// The type of the lowest layer.
-  using lowest_layer_type = typename next_layer_type::lowest_layer_type;
   /// The type of the executor associated with the object.
-  using executor_type = typename lowest_layer_type::executor_type;
+  using executor_type = typename next_layer_type::executor_type;
 
   /**
    * @brief compressor - constructs new compressor with underlying layers
@@ -201,15 +199,6 @@ public:
   next_layer_type& next_layer()
   {
     return next_layer_;
-  }
-
-  /**
-   * @brief lowest_layer returns the lowest layer in the stack of stream
-   * layers.
-   */
-  lowest_layer_type& lowest_layer()
-  {
-    return next_layer_.lowest_layer();
   }
 
   /**
