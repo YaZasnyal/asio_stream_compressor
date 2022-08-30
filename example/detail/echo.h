@@ -31,10 +31,18 @@ public:
                    size_t bytes_transferred)
   {
     if (!error) {
-      asio_stream_compressor::asio::async_write(
-          socket_,
-          asio_stream_compressor::asio::buffer(data_, bytes_transferred),
-          std::bind(&session::handle_write, this, std::placeholders::_1));
+      socket_.async_read_some(
+          asio_stream_compressor::asio::buffer(data_, max_length),
+          std::bind(&session::handle_read,
+                    this,
+                    std::placeholders::_1,
+                    std::placeholders::_2));
+      //      asio_stream_compressor::asio::async_write(
+      //          socket_,
+      //          asio_stream_compressor::asio::buffer(data_,
+      //          bytes_transferred), std::bind(&session::handle_write, this,
+      //          std::placeholders::_1));
+
     } else {
       delete this;
     }
