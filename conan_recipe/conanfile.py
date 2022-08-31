@@ -11,10 +11,10 @@ class AsioStreamCompressorConan(ConanFile):
     topics = ("compression", "asio", "header-only", "networking")
     settings = "compiler"
     options = {
-        "flavour": ["boost", "asio"],
+        "flavor": ["boost", "asio"],
     }
     default_options = {
-        "flavour": "boost",
+        "flavor": "boost",
     } 
     generators = "cmake"
     exports_sources = "../*"
@@ -34,7 +34,7 @@ class AsioStreamCompressorConan(ConanFile):
 
     def requirements(self):
         self.requires("zstd/1.5.2")
-        if self.options.flavour  == "boost":
+        if self.options.flavor  == "boost":
             self.requires("boost/1.79.0")
         else:
             self.requires("asio/1.22.1")
