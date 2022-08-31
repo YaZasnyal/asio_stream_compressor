@@ -124,8 +124,8 @@
             </dt>
             <dd>compressor - constructs new compressor</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#af24b732a863d2bd1019ab0de7b63f97f" class="m-doc">compressor</a>(</span><span class="m-doc-wrap">Stream&amp;&amp; next_layer,
-              int level = ZSTD_defaultCLevel(),
+              <span class="m-doc-wrap-bumper"><a href="#ab747639a0313ffc9ca09c92f5c0e0f88" class="m-doc">compressor</a>(</span><span class="m-doc-wrap">Stream&amp;&amp; next_layer,
+              int level,
               const Allocator&amp; alloc = Allocator()) <span class="m-label m-flat m-success">noexcept(…)</span></span>
             </dt>
             <dd>compressor - constructs new compressor</dd>
@@ -166,8 +166,16 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a52b6a569ada482f24c771fdc14946efd" class="m-doc-self">next_layer</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classasio__stream__compressor_1_1compressor.html#a268fdafa8ed3e4e44e7c2ab0ad6c0403" class="m-doc">next_<wbr />layer_<wbr />type</a>&amp;</span>
             </dt>
             <dd>next_layer returns next layer in the stack of stream layers.</dd>
+            <dt id="a390b48f52cb18fe3a5c506c297319a9c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a390b48f52cb18fe3a5c506c297319a9c" class="m-doc-self">next_layer</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classasio__stream__compressor_1_1compressor.html#a268fdafa8ed3e4e44e7c2ab0ad6c0403" class="m-doc">next_<wbr />layer_<wbr />type</a>&amp;</span>
+            </dt>
+            <dd>next_layer returns next layer in the stack of stream layers.</dd>
             <dt id="a37f8d8bbaca7d6e8a1a80137b580e23f">
               <span class="m-doc-wrap-bumper">auto <a href="#a37f8d8bbaca7d6e8a1a80137b580e23f" class="m-doc-self">lowest_layer</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classasio__stream__compressor_1_1compressor.html#afc46c8290d9086656bce0b273e604257" class="m-doc">lowest_<wbr />layer_<wbr />type</a>&amp;</span>
+            </dt>
+            <dd>lowest_layer returns the lowest layer in the stack of stream layers.</dd>
+            <dt id="ab74c6862fc0b9877b4b84bfa2c6025e3">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab74c6862fc0b9877b4b84bfa2c6025e3" class="m-doc-self">lowest_layer</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classasio__stream__compressor_1_1compressor.html#afc46c8290d9086656bce0b273e604257" class="m-doc">lowest_<wbr />layer_<wbr />type</a>&amp;</span>
             </dt>
             <dd>lowest_layer returns the lowest layer in the stack of stream layers.</dd>
             <dt id="ad1f4fb6e5f0ed537cc26f7789330e214">
@@ -194,6 +202,10 @@
             <dd>get_allocator - get compressor&#x27;s allocator</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a768d45998a8fe668a151c046d544a179" class="m-doc">get_statistics</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classasio__stream__compressor_1_1compressor__statistics.html" class="m-doc">compressor_<wbr />statistics</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>get_statistics - returns compressor&#x27;s statistics</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7121f265dcd08ac626271806e9871e79" class="m-doc">get_statistics</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classasio__stream__compressor_1_1compressor__statistics.html" class="m-doc">compressor_<wbr />statistics</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>get_statistics - returns compressor&#x27;s statistics</dd>
           </dl>
@@ -309,13 +321,13 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="af24b732a863d2bd1019ab0de7b63f97f"><div>
+          <section class="m-doc-details" id="ab747639a0313ffc9ca09c92f5c0e0f88"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;class Stream, class Allocator&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> asio_stream_compressor::<wbr />compressor&lt;Stream, Allocator&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af24b732a863d2bd1019ab0de7b63f97f" class="m-doc-self">compressor</a>(</span><span class="m-doc-wrap">Stream&amp;&amp; next_layer,
-              int level = ZSTD_defaultCLevel(),
+              <span class="m-doc-wrap-bumper"> asio_stream_compressor::<wbr />compressor&lt;Stream, Allocator&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab747639a0313ffc9ca09c92f5c0e0f88" class="m-doc-self">compressor</a>(</span><span class="m-doc-wrap">Stream&amp;&amp; next_layer,
+              int level,
               const Allocator&amp; alloc = Allocator()) <span class="m-label m-success">noexcept(…)</span></span></span>
             </h3>
             <p>compressor - constructs new compressor</p>
@@ -495,6 +507,24 @@
                 template&lt;class Stream, class Allocator&gt;
               </div>
               <span class="m-doc-wrap-bumper"><a href="classasio__stream__compressor_1_1compressor__statistics.html" class="m-doc">compressor_<wbr />statistics</a>&amp; asio_stream_compressor::<wbr />compressor&lt;Stream, Allocator&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a768d45998a8fe668a151c046d544a179" class="m-doc-self">get_statistics</a>(</span><span class="m-doc-wrap">) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>get_statistics - returns compressor&#x27;s statistics</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td><a href="classasio__stream__compressor_1_1compressor__statistics.html" class="m-doc">compressor_<wbr />statistics</a> object with read/write stats</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This method is thread safe</p>
+          </div></section>
+          <section class="m-doc-details" id="a7121f265dcd08ac626271806e9871e79"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;class Stream, class Allocator&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">const <a href="classasio__stream__compressor_1_1compressor__statistics.html" class="m-doc">compressor_<wbr />statistics</a>&amp; asio_stream_compressor::<wbr />compressor&lt;Stream, Allocator&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7121f265dcd08ac626271806e9871e79" class="m-doc-self">get_statistics</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>get_statistics - returns compressor&#x27;s statistics</p>
             <table class="m-table m-fullwidth m-flat">
