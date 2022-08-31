@@ -102,7 +102,7 @@ public:
    * @throws system_error with zstd exception if level is incorrect
    */
   compressor(Stream&& next_layer,
-             int level = ZSTD_defaultCLevel(),
+             int level,
              const Allocator& alloc = Allocator()) noexcept(false)
       : next_layer_(std::move(next_layer))
       , core_(level, next_layer_.get_executor(), alloc)
@@ -204,10 +204,27 @@ public:
   }
 
   /**
+   * @brief next_layer returns next layer in the stack of stream layers.
+   */
+  const next_layer_type& next_layer() const
+  {
+    return next_layer_;
+  }
+
+  /**
    * @brief lowest_layer returns the lowest layer in the stack of stream
    * layers.
    */
   lowest_layer_type& lowest_layer()
+  {
+    return next_layer_.lowest_layer();
+  }
+
+  /**
+   * @brief lowest_layer returns the lowest layer in the stack of stream
+   * layers.
+   */
+  const lowest_layer_type& lowest_layer() const
   {
     return next_layer_.lowest_layer();
   }
@@ -287,6 +304,17 @@ public:
    * This method is thread safe
    */
   compressor_statistics& get_statistics() noexcept
+  {
+    return core_.get_statistics();
+  }
+
+  /**
+   * @brief get_statistics - returns compressor's statistics
+   * @return compressor_statistics object with read/write stats
+   *
+   * This method is thread safe
+   */
+  const compressor_statistics& get_statistics() const noexcept
   {
     return core_.get_statistics();
   }
