@@ -13,7 +13,7 @@ add_custom_target(run-examples)
 
 function(add_example NAME)
   add_executable("${NAME}" "${NAME}.cpp")
-  target_link_libraries("${NAME}" PRIVATE asio_stream_compressor::asio_stream_compressor)
+  target_link_libraries("${NAME}" PRIVATE asio_stream_compressor::asio_stream_compressor Boost::coroutine)
   target_include_directories("${NAME}" PRIVATE detail)
   target_compile_features("${NAME}" PRIVATE cxx_std_11)
   add_custom_target("run_${NAME}" COMMAND "${NAME}" VERBATIM)

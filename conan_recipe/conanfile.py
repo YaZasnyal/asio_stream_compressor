@@ -34,7 +34,7 @@ class AsioStreamCompressorConan(ConanFile):
 
     def requirements(self):
         self.requires("zstd/1.5.2")
-        if self.options.flavor  == "boost":
+        if self.options.flavor == "boost":
             self.requires("boost/1.79.0")
         else:
             self.requires("asio/1.22.1")
@@ -49,3 +49,5 @@ class AsioStreamCompressorConan(ConanFile):
     def package_info(self):
         self.cpp_info.names["cmake_find_package"] = "asio_stream_compressor"
         self.cpp_info.names["cmake_find_package_multi"] = "asio_stream_compressor"
+        if self.options.flavor == "asio":
+            self.cpp_info.defines.append("ASIO_STEREAM_COMPRESSOR_FLAVOUR_STANDALONE")

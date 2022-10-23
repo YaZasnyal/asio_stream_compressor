@@ -84,11 +84,6 @@ public:
     if (!error) {
       new_session->start();
       new_session = new session(io_context_);
-      acceptor_.async_accept(new_session->socket(),
-                             std::bind(&echo_server::handle_accept,
-                                       this,
-                                       new_session,
-                                       std::placeholders::_1));
     } else {
       delete new_session;
     }
