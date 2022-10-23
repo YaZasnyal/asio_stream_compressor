@@ -11,7 +11,8 @@
 namespace asio = asio_stream_compressor::asio;
 namespace ip = asio::ip;
 
-void example(asio::io_context& ctx, boost::asio::yield_context yield) {
+void example(asio::io_context& ctx, boost::asio::yield_context yield)
+{
   asio_stream_compressor::compressor<ip::tcp::socket> sock(ctx);
 
   try {
@@ -49,7 +50,8 @@ void example(asio::io_context& ctx, boost::asio::yield_context yield) {
             << std::endl;
 }
 
-auto main() -> int {
+auto main() -> int
+{
   asio::io_context ctx;
   echo_server s(ctx, 8080);
   asio::spawn(ctx, std::bind(example, std::ref(ctx), std::placeholders::_1));
