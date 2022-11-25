@@ -6,7 +6,6 @@ namespace asio_stream_compressor
 {
 namespace detail
 {
-
 template<class Stream, class Core, class Handler, class ConstBufferSequence>
 class async_write_some_operation
 {
@@ -36,7 +35,9 @@ public:
   {
   }
 
-  void operator()(error_code ec, std::size_t /*bytes_transferred*/ = std::size_t(0), bool start = 0)
+  void operator()(error_code ec,
+                  std::size_t /*bytes_transferred*/ = std::size_t(0),
+                  bool start = 0)
   {
     do {
       switch (state_) {
@@ -142,8 +143,8 @@ private:
 
   ZSTD_outBuffer get_free_buffer()
   {
-    auto buf = core_.write_buf_.prepare(ZSTD_DStreamOutSize()).begin();
-
+    auto buf_sequence = core_.write_buf_.prepare(ZSTD_DStreamOutSize());
+    auto buf = buf_sequence.begin();
     return ZSTD_outBuffer {buf->data(), buf->size(), 0};
   }
 

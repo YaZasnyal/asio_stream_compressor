@@ -6,7 +6,6 @@ namespace asio_stream_compressor
 {
 namespace detail
 {
-
 template<class Stream, class Core, class Handler, class MutableBufferSequence>
 class async_read_some_operation
 {
@@ -36,7 +35,9 @@ public:
   {
   }
 
-  void operator()(error_code ec, std::size_t bytes_transferred = std::size_t(0), bool start = 0)
+  void operator()(error_code ec,
+                  std::size_t bytes_transferred = std::size_t(0),
+                  bool start = 0)
   {
     do {
       switch (state_) {
@@ -141,7 +142,8 @@ private:
           }
           break;
         } else {
-          auto in = core_.input_buf_.data().begin();
+          auto in_sequence = core_.input_buf_.data();
+          auto in = in_sequence.begin();
           ZSTD_inBuffer in_buf {in->data(), in->size(), 0};
           decompression_result =
               ZSTD_decompressStream(core_.dctx_.get(), &out_buf, &in_buf);
