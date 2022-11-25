@@ -3,7 +3,7 @@ from conans import ConanFile, CMake, tools
 
 class AsioStreamCompressorConan(ConanFile):
     name = "asio_stream_compressor"
-    version = "0.1.1"
+    version = "0.1.2"
     license = "MIT"
     author = "Artem Vasiliev github@yazasnyal.dev"
     url = "https://github.com/YaZasnyal/asio_stream_compressor"
