@@ -52,7 +52,7 @@
           asio_stream_compressor
         </h1>
         <p><strong>As a subdirectory</strong></p>
-<p><strong>As a subdirectory</strong><code><a href="namespaceasio__stream__compressor.html" class="m-doc">asio_<wbr />stream_<wbr />compressor</a></code> is a header-only library that allows to add ZSTD compression support for asynchronous streams with easy to use wrapper.</p><p>One minute example:</p><pre class="m-code"><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp"></span>
+<p><strong>As a subdirectory</strong> <a name="md_README"></a> <code><a href="namespaceasio__stream__compressor.html" class="m-doc">asio_<wbr />stream_<wbr />compressor</a></code> is a header-only library that allows to add ZSTD compression support for asynchronous streams with easy to use wrapper.</p><p>One minute example:</p><pre class="m-code"><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;boost/asio/spawn.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;asio_stream_compressor/asio_stream_compressor.h&gt;</span><span class="cp"></span>
 
@@ -82,7 +82,7 @@
 <span class="w">    </span><span class="s">GIT_TAG</span><span class="w"> </span><span class="s">&lt;tag</span><span class="w"> </span><span class="s">or</span><span class="w"> </span><span class="s">branch&gt;</span>
 <span class="w">    </span><span class="p">)</span>
 <span class="nb">FetchContent_Populate</span><span class="p">(</span><span class="s">external_compressor</span><span class="p">)</span>
-<span class="nb">add_subdirectory</span><span class="p">(</span><span class="o">${</span><span class="nv">external_compressor_SOURCE_DIR</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">external_compressor_BINARY_DIR</span><span class="o">}</span><span class="p">)</span></pre><p>Using <code>submodules</code>: <code class="m-code">git submodule add https://github.com/YaZasnyal/asio_stream_compressor.git &lt;path&gt;</code></p><pre class="m-code"><span class="nb">add_subdirectory</span><span class="p">(</span><span class="s">&lt;path&gt;</span><span class="p">)</span></pre><p>&lt;/details&gt;</p><p>&lt;details&gt;</p><p><strong>As a CMake package</strong></p><p>Clone the repository and install it.</p><pre class="m-code">cmake -B build -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/desired/installation/directory .
+<span class="nb">add_subdirectory</span><span class="p">(</span><span class="o">${</span><span class="nv">external_compressor_SOURCE_DIR</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">external_compressor_BINARY_DIR</span><span class="o">}</span><span class="p">)</span></pre><p>Using <code>submodules</code>: <code class="m-code">git submodule add https://github.com/YaZasnyal/asio_stream_compressor.git &lt;path&gt;</code> <code class="m-code"><span class="nb">add_subdirectory</span><span class="p">(</span><span class="s">&lt;path&gt;</span><span class="p">)</span></code> &lt;/details&gt;</p><p>&lt;details&gt;</p><p><strong>As a CMake package</strong></p><p>Clone the repository and install it.</p><pre class="m-code">cmake -B build -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/desired/installation/directory .
 cmake --build build --target install</pre><p>Locate it and link it to your target.</p><pre class="m-code"><span class="nb">find_package</span><span class="p">(</span><span class="s">asio_stream_compressor</span><span class="p">)</span>
 <span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">your_app</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">asio_stream_compressor::asio_stream_compressor</span><span class="p">)</span></pre><p>&lt;/details&gt;</p></section><section id="autotoc_md3"><h2><a href="#autotoc_md3">CMake Options</a></h2><p>There are some options that allow you to change the behavior of the library. This options should be set before calling <code>add_subdirectory</code> or <code>find_package</code>.</p><ul><li><code>asio_stream_compressor_ASIO_STANDALONE</code> - tells library to use standalone asio instead of Boost.Asio</li><li><code>asio_stream_compressor_ZSTD_SHARED</code> - tells library to use shared version of zstd library in its public interface.</li></ul></section><section id="autotoc_md4"><h2><a href="#autotoc_md4">Building and installing</a></h2><p>See the BUILDING document.</p></section><section id="autotoc_md5"><h2><a href="#autotoc_md5">Contributing</a></h2><p>See the CONTRIBUTING document.</p></section>
       </div>
@@ -129,7 +129,7 @@ cmake --build build --target install</pre><p>Locate it and link it to your targe
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>asio_stream_compressor. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>asio_stream_compressor. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
