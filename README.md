@@ -34,7 +34,7 @@ auto main(int, char**) -> int
 
 # Requirements
 
-* C++14 compatible compiler
+* C++17 compatible compiler
 * CMake >= 3.14
 * Boost >= 1.70.0 or ASIO (tested with 1.22.1)
 * zstd >= 1.4.0

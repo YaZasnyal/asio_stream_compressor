@@ -95,7 +95,7 @@ jobs:
         && conan install . -b missing
 
     - name: Configure
-      env: { CXX: clang++-12 }
+      env: { CXX: clang++ }
       run: cmake --preset=ci-sanitize
 
     - name: Build
