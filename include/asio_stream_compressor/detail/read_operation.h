@@ -16,11 +16,11 @@ public:
   async_read_some_operation(Stream& stream,
                             Core& core,
                             const MutableBufferSequence& buffers,
-                            Handler& handler)
+                            Handler&& handler)
       : stream_(stream)
       , core_(core)
       , buffers_(buffers)
-      , handler_(handler)
+      , handler_(std::forward<decltype(handler)>(handler))
   {
   }
 
@@ -43,7 +43,7 @@ public:
       switch (state_) {
         case state::initial: {
           state_ = state::lock_next_layer;
-          break;
+          [[fallthrough]];
         }
 
         case state::lock_next_layer: {
@@ -89,7 +89,7 @@ public:
           }
 
           state_ = state::pass_data_to_handler;
-          break;
+          [[fallthrough]];
         }
 
         case state::pass_data_to_handler: {
@@ -210,12 +210,9 @@ public:
   template<class Handler, class MutableBufferSequence>
   void operator()(Handler&& handler, const MutableBufferSequence& buffers) const
   {
-    using read_op =
-        async_read_some_operation<typename std::decay<decltype(stream_)>::type,
-                                  typename std::decay<decltype(core_)>::type,
-                                  typename std::decay<decltype(handler)>::type,
-                                  typename std::decay<decltype(buffers)>::type>;
-    read_op(stream_, core_, buffers, handler)(error_code(), 0, true);
+    async_read_some_operation(
+        stream_, core_, buffers, std::forward<decltype(handler)>(handler))(
+        error_code(), 0, true);
   }
 
 private:

@@ -4,7 +4,6 @@
 
 namespace asio_stream_compressor
 {
-
 /**
  * @brief The compressor_statistics class holds stats.
  *
@@ -18,7 +17,7 @@ namespace asio_stream_compressor
 class compressor_statistics
 {
 public:
-  using value_type = size_t;
+  using value_type = std::size_t;
   using stat_type = std::atomic<value_type>;
 
   /**
@@ -33,7 +32,7 @@ public:
   };
 
   /**
-   * @brief reset - resets all counters back to zero and returns then as a new
+   * @brief reset - resets all counters back to zero and returns them as a new
    * object.
    */
   value_slice reset() noexcept

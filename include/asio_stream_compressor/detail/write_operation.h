@@ -16,11 +16,11 @@ public:
   async_write_some_operation(Stream& stream,
                              Core& core,
                              const ConstBufferSequence& buffers,
-                             Handler& handler)
+                             Handler&& handler)
       : stream_(stream)
       , core_(core)
       , buffers_(buffers)
-      , handler_(handler)
+      , handler_(std::forward<decltype(handler)>(handler))
   {
   }
 
@@ -39,61 +39,59 @@ public:
                   std::size_t /*bytes_transferred*/ = std::size_t(0),
                   bool start = 0)
   {
-    do {
-      switch (state_) {
-        case state::initial: {
-          state_ = state::lock_next_layer;
-          break;
-        }
-
-        case state::lock_next_layer: {
-          if (expiry(core_.pending_write_) == neg_infin()) {
-            core_.pending_write_.expires_at(pos_infin());
-            state_ = state::encode_data;
-            break;
-          } else {
-            // wait until another read_some operation is finished
-            core_.pending_write_.async_wait(std::move(*this));
-            return;
-          }
-        }
-
-        case state::encode_data: {
-          encode_data();
-          if (ec_) {
-            core_.pending_write_.expires_at(neg_infin());
-            break;
-          }
-
-          state_ = state::send_data;
-          break;
-        }
-
-        case state::send_data: {
-          state_ = state::pass_data_to_handler;
-          asio::async_write(
-              stream_.next_layer(), core_.write_buf_.data(), std::move(*this));
-          return;
-        }
-
-        case state::pass_data_to_handler: {
-          if (ec) {
-            ec_ = ec;
-            core_.pending_write_.expires_at(neg_infin());
-            break;
-          }
-
-          core_.pending_write_.expires_at(neg_infin());
-          core_.stats_.tx_bytes_total.fetch_add(input_length_,
-                                                std::memory_order_relaxed);
-          core_.stats_.tx_bytes_compressed.fetch_add(core_.write_buf_.size(),
-                                                     std::memory_order_relaxed);
-          core_.write_buf_.consume(core_.write_buf_.size());
-          handler_(ec_, input_length_);
-          return;
-        }
+    switch (state_) {
+      case state::initial: {
+        state_ = state::lock_next_layer;
+        [[fallthrough]];
       }
-    } while (!ec);
+
+      case state::lock_next_layer: {
+        if (expiry(core_.pending_write_) == neg_infin()) {
+          core_.pending_write_.expires_at(pos_infin());
+          state_ = state::encode_data;
+        } else {
+          // wait until another read_some operation is finished
+          core_.pending_write_.async_wait(std::move(*this));
+          return;
+        }
+        [[fallthrough]];
+      }
+
+      case state::encode_data: {
+        encode_data();
+        if (ec_) {
+          core_.pending_write_.expires_at(neg_infin());
+          break;
+        }
+
+        state_ = state::send_data;
+        [[fallthrough]];
+      }
+
+      case state::send_data: {
+        state_ = state::pass_data_to_handler;
+        asio::async_write(
+            stream_.next_layer(), core_.write_buf_.data(), std::move(*this));
+        return;
+      }
+
+      case state::pass_data_to_handler: {
+        if (ec) {
+          ec_ = ec;
+          core_.pending_write_.expires_at(neg_infin());
+          break;
+        }
+
+        core_.pending_write_.expires_at(neg_infin());
+        core_.stats_.tx_bytes_total.fetch_add(input_length_,
+                                              std::memory_order_relaxed);
+        core_.stats_.tx_bytes_compressed.fetch_add(core_.write_buf_.size(),
+                                                   std::memory_order_relaxed);
+        core_.write_buf_.consume(core_.write_buf_.size());
+        handler_(ec_, input_length_);
+        return;
+      }
+    }
 
     // if this function is called directly from initiate function  we
     // should call handler_ as if it was post()'ed. So we begin a zero
@@ -198,12 +196,9 @@ public:
   template<class Handler, class ConstBufferSequence>
   void operator()(Handler&& handler, const ConstBufferSequence& buffers) const
   {
-    using write_op = async_write_some_operation<
-        typename std::decay<decltype(stream_)>::type,
-        typename std::decay<decltype(core_)>::type,
-        typename std::decay<decltype(handler)>::type,
-        typename std::decay<decltype(buffers)>::type>;
-    write_op(stream_, core_, buffers, handler)(error_code(), 0, true);
+    async_write_some_operation(
+        stream_, core_, buffers, std::forward<decltype(handler)>(handler))(
+        error_code(), 0, true);
   }
 
 private:

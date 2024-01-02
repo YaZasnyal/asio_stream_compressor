@@ -7,7 +7,6 @@
 
 namespace asio_stream_compressor
 {
-
 /**
  * @brief The Compressor class is used to transparently compress
  * and decompress data before sending or receiving it from the
@@ -180,6 +179,17 @@ public:
    * @warning number of bytes in the callback will be equal to size of the
    * provided buffers or 0 if not all of them could be transferred. This is
    * because of difficulties of mapping provided byted to compressed bytes.
+   *
+   * This method flushes data to the next layer to ensure that the decoder on
+   * the other side is able to decode it. For small writes this may not be
+   * optimal because additional bytes have to be written by the encoder. This is
+   * why usage of boost::asio::buffered_stream is recommended in such case.
+   *
+   * @code
+   * boost::asio::buffered_stream<
+   *   asio_stream_compressor::compressor<ip::tcp::socket>>
+   *   sock(ctx, 8192, 8192);
+   * @endcode
    */
   template<typename ConstBufferSequence,
            typename WriteToken =

@@ -12,7 +12,6 @@ namespace asio_stream_compressor
 {
 namespace detail
 {
-
 struct zstd_cstream_deleter
 {
   void operator()(ZSTD_CCtx* ptr)

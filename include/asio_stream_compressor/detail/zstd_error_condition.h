@@ -6,7 +6,6 @@
 
 namespace asio_stream_compressor
 {
-
 /**
  * @brief The zstd_error_category class is used to distinguish
  * zstd errors.

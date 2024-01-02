@@ -10,7 +10,7 @@ class Recipe(ConanFile):
 
     def requirements(self):
         self.requires("zstd/1.5.2")
-        self.requires("boost/1.79.0")
+        self.requires("boost/1.83.0")
         self.requires("asio/1.22.1")
 
         # Testing only dependencies below
