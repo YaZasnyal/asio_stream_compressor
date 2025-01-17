@@ -37,11 +37,7 @@ public:
    */
   value_slice reset() noexcept
   {
-#if __cplusplus < 202002L
-    static const auto RELAXED = std::memory_order::memory_order_relaxed;
-#else
     static const auto RELAXED = std::memory_order_relaxed;
-#endif
     value_slice slice;
     slice.tx_bytes_total = tx_bytes_total.exchange(0, RELAXED);
     slice.tx_bytes_compressed = tx_bytes_compressed.exchange(0, RELAXED);
