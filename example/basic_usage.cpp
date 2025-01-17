@@ -42,8 +42,8 @@ void example(asio::io_context& ctx, boost::asio::yield_context yield)
   }
 
   auto& stat = sock.get_statistics();
-  std::cout << "stats:"
-            << "\n    tx_bytes_total: " << stat.tx_bytes_total.load()
+  std::cout << "stats:" << "\n    tx_bytes_total: "
+            << stat.tx_bytes_total.load()
             << "\n    tx_bytes_compressed: " << stat.tx_bytes_compressed.load()
             << "\n    rx_bytes_total: " << stat.rx_bytes_total.load()
             << "\n    rx_bytes_compressed: " << stat.rx_bytes_compressed.load()
