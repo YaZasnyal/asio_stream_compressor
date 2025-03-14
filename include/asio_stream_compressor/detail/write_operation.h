@@ -107,7 +107,10 @@ public:
 private:
   void encode_data()
   {
-    for (auto& in : buffers_) {
+    auto buffers_begin = asio::buffer_sequence_begin(buffers_);
+    auto buffers_end   = asio::buffer_sequence_end(buffers_);
+    for (auto it = buffers_begin; it != buffers_end; ++it) {
+      auto& in = *it;
       ZSTD_inBuffer in_buf {in.data(), in.size(), 0};
       input_length_ += in.size();
 
@@ -142,7 +145,7 @@ private:
   ZSTD_outBuffer get_free_buffer()
   {
     auto buf_sequence = core_.write_buf_.prepare(ZSTD_DStreamOutSize());
-    auto buf = buf_sequence.begin();
+    auto buf = asio::buffer_sequence_begin(buf_sequence);
     return ZSTD_outBuffer {buf->data(), buf->size(), 0};
   }
 
