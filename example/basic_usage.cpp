@@ -54,7 +54,9 @@ auto main() -> int
 {
   asio::io_context ctx;
   echo_server s(ctx, 8080);
-  asio::spawn(ctx, std::bind(example, std::ref(ctx), std::placeholders::_1));
+  asio::spawn(ctx.get_executor(),
+              std::bind(example, std::ref(ctx), std::placeholders::_1),
+              boost::asio::detached);
   ctx.run();
 
   return 0;

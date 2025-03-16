@@ -127,8 +127,10 @@ private:
   {
     bool result = false;
 
-    for (auto out = buffers_.begin(); out != buffers_.end();) {
-      ZSTD_outBuffer out_buf {out->data(), out->size(), 0};
+    auto buffers_begin = asio::buffer_sequence_begin(buffers_);
+    auto buffers_end   = asio::buffer_sequence_end(buffers_);
+    for (; buffers_begin != buffers_end;) {
+      ZSTD_outBuffer out_buf {buffers_begin->data(), buffers_begin->size(), 0};
 
       do {
         size_t decompression_result;
@@ -143,7 +145,7 @@ private:
           break;
         } else {
           auto in_sequence = core_.input_buf_.data();
-          auto in = in_sequence.begin();
+          auto in = asio::buffer_sequence_begin(in_sequence);
           ZSTD_inBuffer in_buf {in->data(), in->size(), 0};
           decompression_result =
               ZSTD_decompressStream(core_.dctx_.get(), &out_buf, &in_buf);
@@ -161,7 +163,7 @@ private:
 
       bytes_written_ += out_buf.pos;
       if (out_buf.size == out_buf.pos)
-        ++out;
+        ++buffers_begin;
       else
         break;
     }
